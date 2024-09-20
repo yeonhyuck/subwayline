@@ -70,8 +70,8 @@ foreach($data['realtimePositionList'] as $key => $value){
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <div style="text-align:left">
-        <a href="./subway_line.php">
+    <div class="home_btn">
+        <a href="/">
             <span></span>
             <span></span>
             <span></span>
@@ -79,7 +79,7 @@ foreach($data['realtimePositionList'] as $key => $value){
             HOME
         </a>
     </div>
-    <div style="position: fixed; bottom: 100px; right: 100px;">
+    <div class="refresh_btn">
             <div class="container"> 
             <div class="btn" onClick="window.location.reload()">
                 
@@ -89,33 +89,33 @@ foreach($data['realtimePositionList'] as $key => $value){
             </div>
     </div>
     <div class="line-title"><?php echo $line ?></div>
-    <div style="width:500px; margin: 0 auto;">
-        <ul id="down" style="float:left; margin-left:100px;">
+    <div class="line_main">
+        <ul id="down">
         <div class="updn"> 하행 </div>
             <?php
                 $sql = "SELECT * FROM `lines` WHERE `name` = '$line'";
                 $result = $conn->query($sql);
                 while($row = $result->fetch_assoc()) {
                     echo "<li data-station_name='".$row['station_name']."'>";
-                    echo "<span class='line2'style='position:relative';>";
-                    echo "<span style = 'position: absolute; left:-5px; top:50px;'>▲</span>";
+                    echo "<span class='line2';>";
+                    echo "<span class='box';>▲</span>";
                     foreach ($down as $key => $value) {
                         if ( $row['station_name'] == $value['statnNm']) {
                             $top = $value['trainSttus'] == '1' ? 50 : 90;
-                            echo "<span style='position: absolute; z-index:1; left:-10px; top:.$top.px;'>";
+                            echo "<span class='img' style='top:.$top.px;'>";
                             echo "<img src='pngegg.png' alt='subway' height='30' width='30'/>";
                             echo "</span>";
                         } 
                     }
                     if (strpos($row['code2'], 'C') !== false) {
-                        echo "<div style='width:500px; height: 10px; background-color: green; position: absolute; z-index:1; left:-100px;'></div>";
+                        echo "<div class='cut'></div>";
                     }
                     echo "</span>";
                     echo "</li>";
                 }
             ?>
         </ul>
-        <ul id="up" style="margin-left:300px;">
+        <ul id="up">
         <div class="updn"> 상행 </div>
             <?php
             $sql = "SELECT * FROM `lines` WHERE `name` = '$line'";
@@ -124,9 +124,9 @@ foreach($data['realtimePositionList'] as $key => $value){
                 while($row = $result->fetch_assoc()) {
                     $station_name = $row['station_name'];
                     echo "<li>";
-                    echo "<span class='station' style='margin-left:-150px; position: absolute; width:100px; height:0px; text-align:center; z-index:1;'>" . $row["station_name"] ."</span>";
-                    echo "<span class='line' style='position: relative;'>";
-                    echo "<span style='position: absolute; left:-5px; top:50px;'>▼</span>";
+                    echo "<span class='station'>" . $row["station_name"] ."</span>";
+                    echo "<span class='line'>";
+                    echo "<span class='box2'>▼</span>";
                     foreach ($up as $key => $value) {
                         if ( $station_name == $value['statnNm']) {
                             if ($value['trainSttus'] == '1') {
@@ -134,7 +134,7 @@ foreach($data['realtimePositionList'] as $key => $value){
                             }else{
                                 $top = 90;
                             }
-                            echo "<span style='position: absolute; z-index:1; left:-10px; top:.$top.px;'>";
+                            echo "<span class='img' style='top:.$top.px;'>";
                             echo "<img src='pngegg.png' alt='subway' height='30' width='30'/>";
                             echo "</span>";
                         } 
